@@ -1,0 +1,233 @@
+:root {
+  --bg: #f5f8f3;
+  --panel: #ffffff;
+  --ink: #1f2a1f;
+  --muted: #5d6a5d;
+  --green-700: #285f43;
+  --green-500: #3f8b5a;
+  --green-200: #d4e9da;
+  --danger: #8a2f2f;
+  --border: #d9e2d9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.logo {
+  font-size: 1.6rem;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.brand p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.top-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  color: var(--ink);
+}
+
+button.primary {
+  background: var(--green-700);
+  border-color: var(--green-700);
+  color: #fff;
+}
+
+button.ghost {
+  background: #fff;
+}
+
+button.danger {
+  color: var(--danger);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 70px);
+}
+
+.sidebar {
+  border-right: 1px solid var(--border);
+  padding: 1rem;
+  background: #fbfdfb;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+#slideList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+#slideList li {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem;
+  cursor: pointer;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+#slideList li.active {
+  border-color: var(--green-500);
+  background: var(--green-200);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+}
+
+.editor-panel,
+.canvas-panel {
+  padding: 1rem;
+}
+
+.editor-panel label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+input,
+textarea {
+  width: 100%;
+  margin-top: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.65rem;
+  font: inherit;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.slide-preview,
+.present-slide {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  aspect-ratio: 16/9;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(31, 42, 31, 0.08);
+  overflow: auto;
+}
+
+.slide-preview h2,
+.present-slide h2 {
+  margin-top: 0;
+  font-size: clamp(1.4rem, 2vw, 2.2rem);
+}
+
+.slide-preview p,
+.present-slide p {
+  white-space: pre-wrap;
+  color: #334233;
+  font-size: clamp(1rem, 1.3vw, 1.35rem);
+}
+
+.present-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #0c1b12, #173223);
+  color: #f6fdf8;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 1rem;
+  padding: 1rem;
+  z-index: 10;
+}
+
+.present-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.listen-status {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  width: fit-content;
+  padding: 0.4rem 0.7rem;
+}
+
+.present-overlay .present-slide {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cue-pill {
+  margin: 0;
+  background: rgba(103, 209, 144, 0.25);
+  width: fit-content;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 1050px) {
+  .layout,
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+}
