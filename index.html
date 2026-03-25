@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PresentIQ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">🌿</span>
+        <div>
+          <h1>PresentIQ</h1>
+          <p>AI-first presentation builder</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button id="addSlideBtn" class="ghost">+ Add slide</button>
+        <button id="duplicateSlideBtn" class="ghost">Duplicate</button>
+        <button id="deleteSlideBtn" class="ghost danger">Delete</button>
+        <button id="presentBtn" class="primary">Present</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <h2>Slides</h2>
+        <ul id="slideList"></ul>
+      </aside>
+
+      <section class="workspace">
+        <div class="editor-panel">
+          <label>
+            Slide title
+            <input id="titleInput" type="text" placeholder="Title" />
+          </label>
+          <label>
+            Body
+            <textarea id="bodyInput" rows="8" placeholder="Write your slide content"></textarea>
+          </label>
+          <label>
+            Vocal cue (required)
+            <input id="cueInput" type="text" placeholder="Say this word to advance" />
+          </label>
+          <p class="hint">During presentation mode, saying the cue advances to the next slide.</p>
+        </div>
+
+        <div class="canvas-panel">
+          <div id="slidePreview" class="slide-preview"></div>
+        </div>
+      </section>
+    </main>
+
+    <section id="presentOverlay" class="present-overlay hidden" aria-hidden="true">
+      <div class="present-controls">
+        <button id="prevBtn" class="ghost">← Prev</button>
+        <button id="listenBtn" class="primary">Start listening</button>
+        <button id="nextBtn" class="ghost">Next →</button>
+        <button id="exitBtn" class="ghost danger">Exit</button>
+      </div>
+      <div id="listenStatus" class="listen-status">Mic idle</div>
+      <article id="presentSlide" class="present-slide"></article>
+      <p class="cue-pill">Cue: <strong id="presentCue">—</strong></p>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
