@@ -3,65 +3,152 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PresentIQ</title>
+    <title>PresentIQ Studio</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="topbar">
+    <header class="app-header">
       <div class="brand">
         <span class="logo">🌿</span>
         <div>
-          <h1>PresentIQ</h1>
-          <p>AI-first presentation builder</p>
+          <h1>PresentIQ Studio</h1>
+          <p>AI-first presentation workspace with cue-word navigation</p>
         </div>
       </div>
-      <div class="top-actions">
-        <button id="addSlideBtn" class="ghost">+ Add slide</button>
-        <button id="duplicateSlideBtn" class="ghost">Duplicate</button>
-        <button id="deleteSlideBtn" class="ghost danger">Delete</button>
+      <div class="quick-actions">
+        <button id="newDeckBtn">New deck</button>
+        <button id="saveDeckBtn">Save</button>
+        <button id="exportDeckBtn">Export</button>
+        <label class="file-label">
+          Import
+          <input id="importDeckInput" type="file" accept="application/json" />
+        </label>
         <button id="presentBtn" class="primary">Present</button>
       </div>
     </header>
 
-    <main class="layout">
-      <aside class="sidebar">
-        <h2>Slides</h2>
-        <ul id="slideList"></ul>
+    <nav class="toolbar">
+      <div class="toolbar-group">
+        <button id="addSlideBtn">+ Slide</button>
+        <button id="duplicateSlideBtn">Duplicate</button>
+        <button id="deleteSlideBtn" class="danger">Delete</button>
+        <button id="moveUpBtn">Move ↑</button>
+        <button id="moveDownBtn">Move ↓</button>
+      </div>
+      <div class="toolbar-group">
+        <label>Layout
+          <select id="layoutSelect">
+            <option value="title">Title</option>
+            <option value="title-body">Title + Body</option>
+            <option value="two-column">Two Column</option>
+            <option value="quote">Quote</option>
+            <option value="image-focus">Image Focus</option>
+          </select>
+        </label>
+        <label>Theme
+          <select id="themeSelect"></select>
+        </label>
+        <label>Transition
+          <select id="transitionSelect">
+            <option value="none">None</option>
+            <option value="fade">Fade</option>
+            <option value="slide">Slide</option>
+            <option value="zoom">Zoom</option>
+          </select>
+        </label>
+        <button id="applyTemplateBtn">Apply template</button>
+      </div>
+    </nav>
+
+    <main class="main-layout">
+      <aside class="slides-panel">
+        <div class="panel-head">
+          <h2>Slides</h2>
+          <small id="slideCounter">0 slides</small>
+        </div>
+        <ol id="slideList"></ol>
       </aside>
 
       <section class="workspace">
-        <div class="editor-panel">
-          <label>
-            Slide title
-            <input id="titleInput" type="text" placeholder="Title" />
-          </label>
-          <label>
-            Body
-            <textarea id="bodyInput" rows="8" placeholder="Write your slide content"></textarea>
-          </label>
-          <label>
-            Vocal cue (required)
-            <input id="cueInput" type="text" placeholder="Say this word to advance" />
-          </label>
-          <p class="hint">During presentation mode, saying the cue advances to the next slide.</p>
+        <div class="stage-wrap">
+          <div class="ruler"></div>
+          <article id="canvas" class="slide-canvas"></article>
         </div>
-
-        <div class="canvas-panel">
-          <div id="slidePreview" class="slide-preview"></div>
-        </div>
+        <label class="notes-label">Speaker notes
+          <textarea id="notesInput" rows="4" placeholder="Presenter-only notes"></textarea>
+        </label>
       </section>
+
+      <aside class="inspector">
+        <h2>Inspector</h2>
+        <label>Title
+          <input id="titleInput" type="text" placeholder="Slide title" />
+        </label>
+        <label>Subtitle
+          <input id="subtitleInput" type="text" placeholder="Subtitle" />
+        </label>
+        <label>Body
+          <textarea id="bodyInput" rows="6" placeholder="Main content"></textarea>
+        </label>
+        <label>Secondary body
+          <textarea id="body2Input" rows="4" placeholder="Second column / quote attribution"></textarea>
+        </label>
+        <label>Image URL
+          <input id="imageUrlInput" type="url" placeholder="https://..." />
+        </label>
+
+        <h3>Text style</h3>
+        <div class="inline-grid">
+          <label>Font
+            <select id="fontFamilySelect">
+              <option value="Inter, system-ui, sans-serif">Inter</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Trebuchet MS', sans-serif">Trebuchet</option>
+              <option value="'Courier New', monospace">Courier New</option>
+            </select>
+          </label>
+          <label>Size
+            <input id="fontSizeInput" type="range" min="18" max="56" value="36" />
+          </label>
+          <label>Align
+            <select id="alignSelect">
+              <option value="left">Left</option>
+              <option value="center">Center</option>
+              <option value="right">Right</option>
+            </select>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label><input id="boldInput" type="checkbox" /> Bold title</label>
+          <label><input id="italicInput" type="checkbox" /> Italic body</label>
+          <label><input id="footerToggle" type="checkbox" /> Footer</label>
+        </div>
+        <label>Footer text
+          <input id="footerInput" type="text" placeholder="Quarterly plan • 2026" />
+        </label>
+
+        <h3>Voice controls</h3>
+        <label>Vocal cue (required)
+          <input id="cueInput" type="text" placeholder="Say this to advance" />
+        </label>
+        <p class="muted">The presenter must say this cue to move to the next slide in voice mode.</p>
+      </aside>
     </main>
 
     <section id="presentOverlay" class="present-overlay hidden" aria-hidden="true">
-      <div class="present-controls">
-        <button id="prevBtn" class="ghost">← Prev</button>
+      <div class="present-topbar">
+        <button id="prevBtn">← Prev</button>
         <button id="listenBtn" class="primary">Start listening</button>
-        <button id="nextBtn" class="ghost">Next →</button>
-        <button id="exitBtn" class="ghost danger">Exit</button>
+        <button id="nextBtn">Next →</button>
+        <button id="exitBtn" class="danger">Exit</button>
       </div>
-      <div id="listenStatus" class="listen-status">Mic idle</div>
+      <div class="status-row">
+        <span id="listenStatus">Mic idle</span>
+        <span>Cue: <strong id="presentCue">—</strong></span>
+        <span id="presentIndex">1 / 1</span>
+      </div>
       <article id="presentSlide" class="present-slide"></article>
-      <p class="cue-pill">Cue: <strong id="presentCue">—</strong></p>
+      <aside id="presentNotes" class="present-notes"></aside>
     </section>
 
     <script src="app.js"></script>
