@@ -1,3 +1,4 @@
+
 const STORAGE_KEY = 'presentiq.clone.v5';
 const DEFAULT_TEXT = { title: 'Click to add title', subtitle: 'Click to add subtitle', body: 'Click to add body text' };
 
